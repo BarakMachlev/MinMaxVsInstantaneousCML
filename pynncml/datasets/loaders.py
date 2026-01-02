@@ -249,7 +249,7 @@ def loader_open_mrg_dataset(data_path="./data/",
     :return: LinkDataset
     """
     # Set parameters based on sampling type
-    if samples_type == "min_max":
+    if samples_type in ["min_max", "average"]:
         change2min_max = True
     else:
         change2min_max = False
