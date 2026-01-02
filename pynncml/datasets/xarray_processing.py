@@ -134,6 +134,8 @@ def xarray2link(ds,
                     link = link.create_min_max_link(step_size = 900)
                 elif samples_type == "instantaneous":
                     link = link.create_compressed_instantaneous_link(sampling_interval_in_sec)
+                elif samples_type == "average":
+                    link = link.create_avg_link(step_size=900)
 
                 link_list.append(link)
 
