@@ -30,7 +30,7 @@ combinations = [("average", None)]
 
 for samples_type, sampling_interval_in_sec in combinations:
 
-    with open("synthetic_dataset_2.pkl", "rb") as f:
+    with open("synthetic_dataset.pkl", "rb") as f:
         synthetic_dataset = pickle.load(f)
         
     if samples_type == "min_max":
@@ -43,7 +43,7 @@ for samples_type, sampling_interval_in_sec in combinations:
         sampling_interval_in_sec = 900
 
     # Set output directory based on sampling configuration (lab computer path)
-    base_output_dir = "/home/lucy3/BarakMachlev/Thesis/Final_Results/Transformer/Synthetic_DataSet/AVERAGE/8.7%_rain"
+    base_output_dir = "/home/lucy3/BarakMachlev/Thesis/Final_Results/Transformer/Synthetic_DataSet/AVERAGE/100%_rain"
     if samples_type == "instantaneous":
         output_dir = os.path.join(base_output_dir, f"Instantaneous_{sampling_interval_in_sec}_sec")
     elif samples_type == "min_max":
