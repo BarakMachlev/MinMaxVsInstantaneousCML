@@ -37,11 +37,9 @@ xy_min = [1.29e6, 0.565e6]  # Link Region
 xy_max = [1.34e6, 0.5875e6]
 time_slice = slice("2015-06-01", "2015-08-31")  # Time Interval
 
-#samples_type = "min_max"  # Options: "instantaneous", "min_max"
-#sampling_interval_in_sec = 900 # Options: 10, 20, 30, 50, 60, 90, 100, 150, 180, 300, 450, 900
-
-combinations = [("instantaneous", sec) for sec in [20]]
-#combinations.append(("min_max", None))
+combinations = [("instantaneous", sec) for sec in [10, 20, 30, 50, 60, 90, 100, 150, 180, 300, 450, 900]
+combinations.append(("min_max", None))
+combinations.append(("average", None))
 
 for samples_type, sampling_interval_in_sec in combinations:
 
@@ -50,14 +48,19 @@ for samples_type, sampling_interval_in_sec in combinations:
         sampling_interval_in_sec = 900
     elif samples_type == "instantaneous":
         dynamic_input_size = 2 * (900 // sampling_interval_in_sec)
+    elif samples_type == "average":
+        dynamic_input_size = 2  # avgRSL, avgTSL
+        sampling_interval_in_sec = 900
 
 
     # Set output directory based on sampling configuration (lab computer path)
     base_output_dir = "/home/lucy3/BarakMachlev/Thesis/Final_Results/Transformer/openMRG_DataSet/FineTuning/Set_2"
     if samples_type == "instantaneous":
         output_dir = os.path.join(base_output_dir, f"Instantaneous_{sampling_interval_in_sec}_sec")
-    else:
+    elif samples_type == "min_max":
         output_dir = os.path.join(base_output_dir, "Max_Min")
+    elif samples_type == "average":
+        output_dir = os.path.join(base_output_dir, "Average")
 
     os.makedirs(output_dir, exist_ok=True)
 
