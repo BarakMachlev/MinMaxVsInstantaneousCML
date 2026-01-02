@@ -397,6 +397,38 @@ class Link(LinkBase):
             gauge_ref=self.gauge_ref
         )
 
+    def create_avg_link(self, step_size: int) -> "Link":
+        """
+        Average the link data over fixed intervals.
+        :param step_size: Window size in seconds (e.g., 900 → average of 90 samples)
+        """
+        assert step_size % 10 == 0, "Step size must be a multiple of 10 seconds"
+        k = step_size // 10
+
+        n = (len(self.link_rsl) // k) * k
+
+        rsl_avg = self.link_rsl[:n].reshape(-1, k).mean(axis=1)
+        time_avg = self.time_array[:n:k]
+
+        tsl_avg = (
+            self.link_tsl[:n].reshape(-1, k).mean(axis=1)
+            if self.link_tsl is not None else None
+        )
+
+        rain_avg = (
+            self.rain_gauge[:n].reshape(-1, k).mean(axis=1)
+            if self.rain_gauge is not None else None
+        )
+
+        return Link(
+            rsl_avg,
+            time_avg,
+            meta_data=self.meta_data,
+            rain_gauge=rain_avg,
+            link_tsl=tsl_avg,
+            gauge_ref=self.gauge_ref
+        )
+
 
 # TODO:Remove this function and replace with OpenMRG dataset
 def read_open_cml_dataset(pickle_path: str) -> list:
