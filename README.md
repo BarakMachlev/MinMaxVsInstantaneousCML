@@ -4,7 +4,8 @@ A python toolbox based on PyTorch which utilized neural network for rain estimat
 
 This project is an extended version of the [PyNNcml](https://github.com/haihabi/PyNNcml) rainfall estimation toolbox, developed as part of the M.Sc. thesis of Hai Victor Habi under the supervision of Prof. Hagit Messer at Tel Aviv University and maintained by the [Cellular Environmental Monitoring and Processing Lab](https://cellenmonlab.tau.ac.il/).  
 
-This version includes new features and experiments as part of the M.Sc. thesis of Barak Machlev under the supervision of Dr. Jonatan Ostrometzky, which focuses on the impact of sampling interval on rainfall estimation from CMLs using Transformers.
+This version includes new features and experiments as part of the M.Sc. thesis of Barak Machlev under the supervision of Dr. Jonatan Ostrometzky, which focuses on the use of Transformers for empirical study of the effect of
+different sampling protocols on rain estimation accuracy.
 
 ![plot](./images/cml_figure.png)
 * The figure above was create by Jonatan Ostrometzky.
