@@ -24,15 +24,13 @@ class SyntheticLink:
         self.rain_rate_15min = None  # Down sampled to 15-minute averages
         self.meta_data = meta_data
 
-#samples_type = "min_max"  # Options: "instantaneous", "min_max"
-#sampling_interval_in_sec = 10   # Options: 10, 20, 30, 50, 60, 90, 100, 150, 180, 300, 450, 900
-
 combinations = [("instantaneous", sec) for sec in [10, 20, 30, 50, 60, 90, 100, 150, 180, 300, 450, 900]]
 combinations.append(("min_max", None))
+combinations = [("average", None)]
 
 for samples_type, sampling_interval_in_sec in combinations:
 
-    with open("synthetic_dataset.pkl", "rb") as f:
+    with open("synthetic_dataset_2.pkl", "rb") as f:
         synthetic_dataset = pickle.load(f)
         
     if samples_type == "min_max":
@@ -40,13 +38,18 @@ for samples_type, sampling_interval_in_sec in combinations:
         sampling_interval_in_sec = 900
     elif samples_type == "instantaneous":
         dynamic_input_size = 2 * (900 // sampling_interval_in_sec)
+    elif samples_type == "average":
+        dynamic_input_size = 2  # avgRSL, avgTSL
+        sampling_interval_in_sec = 900
 
     # Set output directory based on sampling configuration (lab computer path)
-    base_output_dir = "/home/lucy3/BarakMachlev/Thesis/Final_Results/Transformer/Synthetic_DataSet/Graph_4/15_sigma"
+    base_output_dir = "/home/lucy3/BarakMachlev/Thesis/Final_Results/Transformer/Synthetic_DataSet/AVERAGE/8.7%_rain"
     if samples_type == "instantaneous":
         output_dir = os.path.join(base_output_dir, f"Instantaneous_{sampling_interval_in_sec}_sec")
-    else:
+    elif samples_type == "min_max":
         output_dir = os.path.join(base_output_dir, "Max_Min")
+    elif samples_type == "average":
+        output_dir = os.path.join(base_output_dir, "Average")
 
     os.makedirs(output_dir, exist_ok=True)
 
@@ -74,6 +77,18 @@ for samples_type, sampling_interval_in_sec in combinations:
 
             link.rsl = np.stack([max_rsl, min_rsl], axis=1)  # [T, 2]
             link.tsl = np.stack([max_tsl, min_tsl], axis=1)  # [T, 2]
+
+        elif samples_type == "average":
+            assert len(link.rsl) % 90 == 0, "Length must be divisible by 90"
+
+            rsl_reshaped = link.rsl.reshape(-1, 90)
+            tsl_reshaped = link.tsl.reshape(-1, 90)
+
+            rsl_avg = rsl_reshaped.mean(axis=1)
+            tsl_avg = tsl_reshaped.mean(axis=1)
+
+            link.rsl = rsl_avg[:, None]  # [T, 1]
+            link.tsl = tsl_avg[:, None]  # [T, 1]
 
     batch_size = 16
     lr = 1e-4  # @param{type:"number"}
