@@ -6,7 +6,7 @@ This project is an extended version of the [PyNNcml](https://github.com/haihabi/
 
 This version includes new features and experiments as part of the M.Sc. thesis of Barak Machlev under the supervision of Dr. Jonatan Ostrometzky, which focuses on the impact of sampling interval on rainfall estimation from CMLs using Transformers.
 
-![plot](./images/cml_figure.png)
+![plot](./appendix/cml_figure.png)
 * The figure above was create by Jonatan Ostrometzky.
 
 
