@@ -33,23 +33,14 @@ pip install pynncml
 
 ## Task and Algorithms
 
-1. Wet Dry Classification (RNN[1,2,3] and STD Window[6])
-2. Rain Estimation (Constant Baseline [6], Dynamic Baseline [5], Direct RNN Estimation [4,3])
-3. Rain Field Interpolation (IDW, GMZ [9])
-4. Wet Dry Classification and Rain Rate Estimation (Encoder-only Transformer)
+1. Wet Dry Classification (RNN[1,2,3] and STD Window[7])
+2. Rain Estimation (Constant Baseline [7], Dynamic Baseline [6], Direct RNN Estimation [4,3])
+3. Rain Field Interpolation (IDW, GMZ [10])
+4. Wet Dry Classification and Rain Rate Estimation [5]
 
 
 ## Datasets
 This repository uses the PyTorch version of the OpenMRG dataset [10] and the synthesized datasets generated as part of Barak Machlev’s M.Sc. study, described in detail in the study and used for evaluating the impact of sampling interval on rainfall estimation.
-
-# Impact of Sampling Interval on Rainfall Estimation from Communication Microwave Links Using Transformers
-
-This repository includes all code required to train and reproduce the experiments for  
-**A Universal Transformer-Based Algorithm for Rain Estimation Using Commercial Microwave Links Across Diﬀerent Sampling Intervals**.
-
-## Model Zoo *(not relevant to this study)*
-In this project we supply a set of trained networks in our [Model Zoo](https://github.com/haihabi/PyNNcml/tree/master/pynncml/model_zoo), this networks are trained on our own dataset which is not publicly available.
-The model contains three types of networks: Wet-dry classification network, one-step network (rain estimation only) and two-step network (rain estimation and wet-dry classification). Moreover, we have provided all of these networks with a various number of RNN cells (1, 2, 3). From more details about network structure and results see the publication list.
 
 # Contributing
 
